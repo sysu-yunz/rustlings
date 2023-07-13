@@ -37,10 +37,7 @@ fn parse_pos_nonzero(s: &str) -> Result<PositiveNonzeroInteger, ParsePosNonzeroE
 
     match s.parse::<i64>() {
         Ok(x) => {
-            match PositiveNonzeroInteger::new(x) {
-                Ok(value) => ParsePosNonzeroError::from_creation(PositiveNonzeroInteger::new(x)),
-                Err(error) => ParsePosNonzeroError::from_creation(error)
-            }
+            PositiveNonzeroInteger::new(x).map_err(ParsePosNonzeroError::from_creation)
         } 
         Err(e) => ParsePosNonzeroError::from_parseint(e)
     }
